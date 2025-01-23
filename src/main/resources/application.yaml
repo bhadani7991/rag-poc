@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: rag-poc
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/employees
+    username: root
+    password: Mohit@4619

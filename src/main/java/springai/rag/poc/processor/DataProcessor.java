@@ -1,5 +1,6 @@
 package springai.rag.poc.processor;
 
+import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,19 +38,19 @@ public class DataProcessor {
     @Autowired
     public void storeDataInStore(){
 
-        int pageSize = 1000;
-        int pageNumber = 0;
+//        int pageSize = 1000;
+//        int pageNumber = 0;
+//
+//        Page<Employees> page;
+//        do {
+//            // Fetch data in chunks
+//            PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+//            page = employeeRepo.findAll(pageRequest);
+            List<String> employeeschunksData = chunkData(employeeRepo.findTop1000EmployeesOrderedByEmpNo());
+            storageService.storeChunks(embeddingService.generateEmbeddings(employeeschunksData),employeeschunksData.stream().map(e->TextSegment.from(e)).toList());
 
-        Page<Employees> page;
-        do {
-            // Fetch data in chunks
-            PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
-            page = employeeRepo.findAll(pageRequest);
-            List<String> employeeschunksData = chunkData(page.getContent());
-            storageService.storeChunks(embeddingService.generateEmbeddings(employeeschunksData));
-
-            pageNumber++;  // Move to the next batch
-        } while (page.hasNext());
+//            pageNumber++;  // Move to the next batch
+//        } while (page.hasNext());
     }
 
     // Chunking the data
@@ -62,5 +63,6 @@ public class DataProcessor {
             chunks.add(chunk);
         }
         return chunks;
+
     }
 }

@@ -7,7 +7,6 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springai.rag.poc.service.IEmbeddingService;
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 

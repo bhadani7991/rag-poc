@@ -11,7 +11,7 @@ public class AppConstants {
     public static final String OPEN_API_KEY = "OPENAI_API_KEY";
     public static final String MODAL_NAME_KEY = "MODAL_NAME";
     public static final double TEMPERATURE = 0.3;
-    public static final String COLLECTION_NAME = "chatModel_data";
+    public static final String COLLECTION_NAME = "testing_modal";
     public static final Collections.Distance DISTANCE = Collections.Distance.Cosine;
     public static final int DIMENSION = 384;
     public static final String QDRANT_HOST = "localhost";

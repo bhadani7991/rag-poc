@@ -54,25 +54,25 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-core</artifactId>
-			<version>1.45.0</version> <!-- or the latest version -->
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>io.grpc</groupId>-->
+<!--			<artifactId>grpc-core</artifactId>-->
+<!--			<version>1.45.0</version> &lt;!&ndash; or the latest version &ndash;&gt;-->
+<!--		</dependency>-->
 
-		<!-- gRPC Netty -->
-		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-netty</artifactId>
-			<version>1.45.0</version> <!-- or the latest version -->
-		</dependency>
+<!--		&lt;!&ndash; gRPC Netty &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>io.grpc</groupId>-->
+<!--			<artifactId>grpc-netty</artifactId>-->
+<!--			<version>1.45.0</version> &lt;!&ndash; or the latest version &ndash;&gt;-->
+<!--		</dependency>-->
 
-		<!-- gRPC Stub -->
-		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-stub</artifactId>
-			<version>1.45.0</version> <!-- or the latest version -->
-		</dependency>
+<!--		&lt;!&ndash; gRPC Stub &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>io.grpc</groupId>-->
+<!--			<artifactId>grpc-stub</artifactId>-->
+<!--			<version>1.45.0</version> &lt;!&ndash; or the latest version &ndash;&gt;-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>dev.langchain4j</groupId>
 			<artifactId>langchain4j-core</artifactId>

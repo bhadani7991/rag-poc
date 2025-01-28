@@ -6,7 +6,6 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
-import dev.langchain4j.rag.content.Content;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
@@ -15,8 +14,6 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import dev.langchain4j.store.embedding.neo4j.Neo4jEmbeddingStore;
 import dev.langchain4j.store.embedding.qdrant.QdrantEmbeddingStore;
-import io.grpc.ManagedChannel;
-import io.grpc.netty.NettyChannelBuilder;
 import io.qdrant.client.QdrantClient;
 import io.qdrant.client.QdrantGrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +22,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import springai.rag.poc.assistant.Assistant;
 import javax.sql.DataSource;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.time.Duration.ofSeconds;
 import static springai.rag.poc.constants.AppConstants.COLLECTION_NAME;
@@ -47,6 +42,7 @@ public class RagConfig {
 
     @Autowired
     private DataSource dataSource;
+
     @Bean
     public ChatLanguageModel chatLanguageModel(){
         return OpenAiChatModel.builder()
@@ -70,10 +66,15 @@ public class RagConfig {
 
     @Bean
     public QdrantClient qdrantClient() {
-        ManagedChannel channel = NettyChannelBuilder.forAddress("localhost", 6333)
-                .usePlaintext()
-                .build();
-        return new QdrantClient(QdrantGrpcClient.newBuilder(channel).build());
+        return new QdrantClient(
+                QdrantGrpcClient.newBuilder(
+                                "",
+                                6334,
+                                true
+                        )
+                        .withApiKey("")
+                        .build()
+        );
     }
 
 

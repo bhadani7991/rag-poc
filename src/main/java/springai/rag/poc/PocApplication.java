@@ -10,17 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PocApplication {
 
-	@Autowired
-	private EmbeddingStore<TextSegment> embeddingStore;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(PocApplication.class, args);
 	}
 
-
-	@PreDestroy
-	public void clearVectorStore(){
-		embeddingStore.removeAll();
-	}
 
 }

@@ -17,6 +17,10 @@ public class EmbeddingStoreManagementController {
 
     private final EmbeddingStore<TextSegment> embeddingStore;
 
+    /**
+     * Api to remove all the embedding from Embedding Store.
+     * @return String - returned Success Response
+     */
     @DeleteMapping("/delete")
     public ResponseEntity<String> clearVectorStore(){
         try{

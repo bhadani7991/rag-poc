@@ -22,5 +22,5 @@ spring:
 
 # Content Retriever Configuration
   content-retriever:
-    max-results: 10
-    min-score: 0.2
+    max-results: 5
+    min-score: 0.4

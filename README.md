@@ -1,6 +1,5 @@
 # RAG-POC
--- Overview
-  --"This is RAG Project to demonstrate the RAG Workflow using langchain4j library from indexing to retrieval based on the different datasource(ex- webpage, file etc)."
+"This is RAG Project to demonstrate the RAG Workflow using langchain4j library from indexing to retrieval based on the different datasource(ex- webpage, file etc)."
 
  # Features
  key features of the project:

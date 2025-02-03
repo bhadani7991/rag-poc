@@ -37,6 +37,7 @@ public class RagConfig {
     private final EmbeddingModelConfig embeddingModelConfig;
     private final QdrantConfig qdrantConfig;
     private final ContentRetrieverConfig contentRetrieverConfig;
+    private final PineconeConfig pineconeConfig;
 
     /**
      * configures an instance of `ChatLanguageModal` for
@@ -124,6 +125,28 @@ public class RagConfig {
    public EmbeddingStore<TextSegment> inMemmoryEmbeddingStore() {
         return new InMemoryEmbeddingStore<>();
     }
+
+    /**
+     * Experimental , trying out pinecone db as implementation.
+     * @param embeddingModel - to convert text into Embeddings
+     * @return EmbeddingStore - {@link  EmbeddingStore}
+     */
+    /*
+    @Bean
+    public EmbeddingStore<TextSegment> pineconeEmbeddingStore(EmbeddingModel embeddingModel) {
+        return PineconeEmbeddingStore.builder()
+                .apiKey(System.getenv(PINECONE_API_KEY))
+                .index(pineconeConfig.getIndexName())
+                .nameSpace(randomUUID())
+                .createIndex(PineconeServerlessIndexConfig.builder()
+                        .cloud(pineconeConfig.getCloud())
+                        .region(pineconeConfig.getRegion())
+                        .dimension(embeddingModel.dimension())
+                        .build())
+                .build();
+
+    }
+    */
 
     /**
      * Configures and instance of `ContentRetriever` for

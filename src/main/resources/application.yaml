@@ -23,4 +23,10 @@ spring:
 # Content Retriever Configuration
   content-retriever:
     max-results: 5
-    min-score: 0.4
+    min-score: 0.6
+
+#pinecone DB related configuration
+  pinecone:
+    index-name: test
+    cloud: AWS
+    region: us-east-1

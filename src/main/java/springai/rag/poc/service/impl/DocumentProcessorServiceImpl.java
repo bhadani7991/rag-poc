@@ -8,6 +8,8 @@ import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import lombok.RequiredArgsConstructor;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import springai.rag.poc.constants.AppConstants;
 import springai.rag.poc.service.DocumentProcessor;
 
 import java.io.IOException;
@@ -27,6 +30,7 @@ import java.util.Objects;
 
 import static springai.rag.poc.constants.AppConstants.INGESTION_SUCCESS_RESPONSE;
 import static springai.rag.poc.constants.AppConstants.METADATA_KEY;
+
 
 @Service
 @RequiredArgsConstructor
@@ -53,11 +57,16 @@ public class DocumentProcessorServiceImpl implements DocumentProcessor {
 
     @Override
     public String processDocuments(List<MultipartFile> documents) {
-        List<Document> documentList = documents.stream().map(e->{
+        List<Document> documentList = documents.stream().map(file->{
             try {
-               InputStream raader = e.getInputStream();
-               return Document.from(new String(raader.readAllBytes(),
-                       StandardCharsets.UTF_8));
+                String contentType = file.getContentType();
+                InputStream inputStream = file.getInputStream();
+
+                return switch (contentType) {
+                    case AppConstants.ContentType.APPLICATION_PDF-> Document.from(extractTextFromPDF(inputStream));
+                    case AppConstants.ContentType.APPLICATION_TEXT -> Document.from(new String(inputStream.readAllBytes(), StandardCharsets.UTF_8));
+                    default -> throw new RuntimeException("Unsupported file type: " + contentType);
+                };
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -66,9 +75,16 @@ public class DocumentProcessorServiceImpl implements DocumentProcessor {
         return doDocumentEmbeddingAndIngestionProcess(documentList);
     }
 
+    private static String extractTextFromPDF(InputStream inputStream) throws IOException {
+        try (PDDocument document = PDDocument.load(inputStream)) {
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            return pdfStripper.getText(document);
+        }
+    }
+
     private @NotNull String doDocumentEmbeddingAndIngestionProcess(List<Document> documentList) {
         try {
-            List<TextSegment> textSegmentList = new DocumentByWordSplitter(100, 10)
+            List<TextSegment> textSegmentList = new DocumentByWordSplitter(1000, 50)
                     .splitAll(documentList);
             List<Embedding> embeddingList = embeddingModel.embedAll(textSegmentList).content();
             LOGGER.info("Embedding Completed for the Text Segments");
@@ -84,7 +100,7 @@ public class DocumentProcessorServiceImpl implements DocumentProcessor {
         try {
             ResponseEntity<String> data =  restTemplate.getForEntity(url,String.class);
             org.jsoup.nodes.Document document = Jsoup.parse(Objects.requireNonNull(data.getBody()));
-            return document.body().text().substring(0,3000);
+            return document.body().text().substring(0,10000);
         }catch (Exception e){
             throw new RuntimeException("Error occurred while fetching the url Content {}",e);
         }

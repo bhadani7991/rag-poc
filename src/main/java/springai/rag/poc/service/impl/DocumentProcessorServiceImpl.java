@@ -193,7 +193,8 @@ public class DocumentProcessorServiceImpl implements DocumentProcessor {
 
     private @NotNull String doDocumentEmbeddingAndIngestionProcess(List<Document> documentList) {
         try {
-            List<TextSegment> textSegmentList = new DocumentByWordSplitter(1000, 50)
+            // For Excel we can customize to less maxSegment as to store to single row to get more similar content
+            List<TextSegment> textSegmentList = new DocumentByWordSplitter(50, 50)
                     .splitAll(documentList);
             List<Embedding> embeddingList = embeddingModel.embedAll(textSegmentList).content();
             LOGGER.info("Embedding Completed for the Text Segments");

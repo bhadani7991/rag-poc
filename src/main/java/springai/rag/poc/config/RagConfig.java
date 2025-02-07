@@ -12,6 +12,8 @@ import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import dev.langchain4j.store.embedding.pinecone.PineconeEmbeddingStore;
+import dev.langchain4j.store.embedding.pinecone.PineconeServerlessIndexConfig;
 import dev.langchain4j.store.embedding.qdrant.QdrantEmbeddingStore;
 import io.qdrant.client.QdrantClient;
 import io.qdrant.client.QdrantGrpcClient;
@@ -21,8 +23,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import springai.rag.poc.assistant.Assistant;
 
+import static dev.langchain4j.internal.Utils.randomUUID;
 import static java.time.Duration.ofSeconds;
 import static springai.rag.poc.constants.AppConstants.OPEN_API_KEY;
+import static springai.rag.poc.constants.AppConstants.PINECONE_API_KEY;
 import static springai.rag.poc.constants.AppConstants.QDRANT_API_KEY;
 
 /**
@@ -131,7 +135,6 @@ public class RagConfig {
      * @param embeddingModel - to convert text into Embeddings
      * @return EmbeddingStore - {@link  EmbeddingStore}
      */
-    /*
     @Bean
     public EmbeddingStore<TextSegment> pineconeEmbeddingStore(EmbeddingModel embeddingModel) {
         return PineconeEmbeddingStore.builder()
@@ -146,7 +149,7 @@ public class RagConfig {
                 .build();
 
     }
-    */
+
 
     /**
      * Configures and instance of `ContentRetriever` for

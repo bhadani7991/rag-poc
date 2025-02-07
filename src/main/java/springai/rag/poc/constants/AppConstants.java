@@ -16,5 +16,7 @@ public class AppConstants {
     public static class ContentType{
         public static final String APPLICATION_PDF = "application/pdf";
         public static final String APPLICATION_TEXT="text/plain";
+        public static final String APPLICATION_EXCEL = "application/vnd.ms-excel";
+        public static final String APPLICATION_XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     }
 }

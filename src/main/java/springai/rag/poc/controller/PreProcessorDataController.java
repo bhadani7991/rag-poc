@@ -49,6 +49,5 @@ public class PreProcessorDataController {
     @PostMapping("/documents")
     public ResponseEntity<String> processDocuments(@RequestParam List<MultipartFile> documents){
         return ResponseEntity.ok(documentProcessor.processDocuments(documents));
-
     }
 }

@@ -5,7 +5,7 @@
  key features of the project:
 
 ✅ Supports document embedding and retrieval
-✅ Handles multiple file types (PDF, TXT,XLX)
+✅ Handles multiple file types (PDF, TXT)
 ✅ Uses Qdrant for vector storage
 ✅ Exposes REST API for document upload and search
 ✅ Used SAX(Simple Api for Xml) parser for efficiently handling the large excel file 
